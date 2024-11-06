@@ -12,6 +12,13 @@ while j <= 20:
         print(j)
     j+=1
     
+print("\nNúmeros pares del 1 al 20:")
+k = 1
+while k <= 20:
+    if k % 3 == 0:
+        print(k)
+    k+=1
+    
 print("\nNumeros primos del 1 al 50:")
 a = 2
 while a <= 50:
