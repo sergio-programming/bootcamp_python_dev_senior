@@ -1,18 +1,19 @@
 from datetime import datetime
 import statistics
+from textwrap import dedent
 
 class Tarea:
     def __init__(self, nombre, fechaLimite, categoria, horasDedicadas):
         self.nombre = nombre
         self.fechaLimite = fechaLimite
-        self.categoria = categoria
+        self.categoria = categoria 
         self.horasDedicadas = horasDedicadas
         
     def ingresarTareas(listaTareas):
-        nombre = input("Por favor ingrese el nombre de las tarea: ")
-        fechaLimite_str = input("Por favor ingrese la fecha limite de la tarea: ")
+        nombre = input("Por favor ingrese el nombre de la tarea: ")
+        fechaLimite_str = input("Por favor ingrese la fecha limite de la tarea (DD/MM/YYYY): ")
         try:
-            fechaLimite = datetime.striptime(fechaLimite_str, "%d,%m,%Y")
+            fechaLimite = datetime.strptime(fechaLimite_str, "%d,%m,%Y")
         except ValueError:
             print("La fecha ingresada no es valida. Por favor intente de nuevo.")
             return
@@ -34,11 +35,13 @@ class Tarea:
             return
         
         for i, tarea in enumerate(listaTareas, start=1):
-            print(f"""Tarea #{i}:
-        Nombre de tarea: {tarea.nombre}
-        Fecha limite: {tarea.fechaLimite.strftime('%d/%m/%Y')}
-        Categoria: {tarea.categoria}
-        Horas dedicadas: {tarea.horasDedicadas}""")
+            print(
+                dedent(f"""Tarea #{i}:
+                       Nombre de tarea: {tarea.nombre}
+                       Fecha limite: {tarea.fechaLimite.strftime('%d/%m/%Y')}
+                       Categoria: {tarea.categoria}
+                       Horas dedicadas: {tarea.horasDedicadas}""")
+                  )
         
     def analizarHoras(listaTareas):
         if not listaTareas:
@@ -83,7 +86,7 @@ while True:
     
     while True:
         try:
-            opcion = int(input("\nPor favor digite su opción:"))
+            opcion = int(input("\nPor favor digite su opción: "))
         except ValueError:
             print("El dato ingresado no es valido. Por favor ingrese un número.")
             input("Presione <Enter> para continuar")    
