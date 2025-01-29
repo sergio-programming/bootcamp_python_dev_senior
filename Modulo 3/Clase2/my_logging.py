@@ -28,9 +28,9 @@ logging.basicConfig(
 
 @dataclass
 class Producto:
-    nombre = str
-    precio = float
-    cantidad = int
+    nombre: str
+    precio: float
+    cantidad: int
     
     def comprar(self, cantidad: int):
         if cantidad > self.cantidad:
@@ -52,21 +52,23 @@ class Tienda:
         
     def realizar_compra(self, nombre_producto: str, cantidad: int):
         producto = next((p for p in self.productos if p.nombre == nombre_producto), None)
-        if producto:
-            try:
-                total = producto.comprar(cantidad)
-                logging.info(f"""Compra realizada:
-                             Producto: {nombre_producto}
-                             Cantidad: {cantidad}
-                             Total: ${total} pesos
-                             """)
-                return total
-            except ValueError as e:
-                logging.error(f"Error al efectuar la compra: {e}")
-                print(f"Error al efectuar la compra: {e}")
-            else:
-                logging.warning("Producto fuera de stock")
-                print("Producto fuera de stock")
+        
+        if producto is None:
+            logging.warning(f"Producto {nombre_producto} no encontrado en la tienda.")
+            print(f"Producto {nombre_producto} no encontrado en la tienda.")
+            return
+
+        try:
+            total = producto.comprar(cantidad)
+            logging.info(f"""Compra realizada:
+                    Producto: {nombre_producto}
+                    Cantidad: {cantidad}
+                    Total: ${total} pesos
+                """)
+            return total
+        except ValueError as e:
+            logging.error(f"Error al efectuar la compra: {e}")
+            print(f"Error al efectuar la compra: {e}")
                 
 if __name__ == "__main__":
     tienda = Tienda()
