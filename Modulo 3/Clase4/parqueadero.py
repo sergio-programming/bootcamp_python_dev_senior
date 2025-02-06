@@ -21,13 +21,13 @@ class ParqueaderoApp:
         self.vehiculos = {}
         
         #Entrada de la placa
-        tk.Label(ventana, text="Ingrese la placa del vehiculo: ").pack(pady=5) # Texto para
+        tk.Label(ventana, text="Ingrese la placa del vehiculo: ").pack(pady=5) # Texto para la caja de texto
         self.entryPlaca = tk.Entry(ventana) # Caja de texto
         self.entryPlaca.pack(pady=5)
         
         #Botones
-        tk.Button(ventana, text="Registro Entrada", command="").pack(pady=5)
-        tk.Button(ventana, text="Registro Salida", command="").pack(pady=5)
+        tk.Button(ventana, text="Registro Entrada", command=self.registroEntrada).pack(pady=5)
+        tk.Button(ventana, text="Registro Salida", command=self.registroSalida).pack(pady=5)
         
         #Tabla de vehiculos
         self.tree = ttk.Treeview(ventana, columns=("Placa", "Hora de Entrada"), show="headings")
@@ -51,14 +51,14 @@ class ParqueaderoApp:
         if placa in self.vehiculos:
             Vehiculo = self.vehiculos.pop(placa)
             tiempoParque = Vehiculo.calcularTiempo()
-            
+            print(tiempoParque)
             self.tree.delete(placa)
             
-            messagebox    
+            messagebox.showinfo("Salida", f"Vehiculo {placa} ha salido del parqueadero \nTiempo: {tiempoParque:.2f} minutos")
+        else:
+            messagebox.showerror("Error", "Vehiculo no encontrado")    
     
-            
-        
-        
+                   
 root = tk.Tk()
 app = ParqueaderoApp(root)
 root.mainloop()
