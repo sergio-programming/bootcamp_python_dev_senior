@@ -71,12 +71,12 @@ class SistemaVeterinaria:
             telefono = input("Ingrese el número de telefono del cliente: ").strip()
             direccion = input("Ingrese la dirección del cliente: ").strip()
             
-            if nombre is None or telefono is None or direccion  is None:
+            if not nombre or not telefono or not direccion:
                 raise ValueError("Todos los campos son obligatorios. Por favor diligenciar nuevamente.")  
             
             cliente = Cliente(nombre, telefono, direccion)
             self.clientes.append(cliente)
-            print("Cliente registrado con exito!!!")
+            print("¡Cliente registrado con exitosamente!")
               
         except ValueError as e:
             print(f"Error: {e}")
@@ -98,11 +98,45 @@ class SistemaVeterinaria:
             except ValueError:
                 print("Debe ingresar un valor númerico para la edad de la mascota. Intente nuevamente.")
          
-            if nombre is None or especie is None or raza is None or edad is None:
+            if not nombre or not especie or not raza or not edad:
                 raise ValueError("Todos los campos son obligatorios. Por favor diligenciar nuevamente.")
+            
+            mascota = RegistroMascota(nombre, especie, raza, edad)
+            cliente.agregarMascota(mascota)
+            print("¡Mascota registrada exitosamente!")
             
             
         except ValueError as e:
             print(f"Error: {e}")
         
+    
+    def programarCita(self):
+        try:
+            nombreCliente = input("Ingrese el nombre del cliente que es dueño de la mascota: ").strip()
+            nombreMascota = input("Ingrese el nombre de la mascota: ").strip()
+            
+            cliente = next((c for c in self.clientes if c.nombre == nombreCliente), None)
+            if not cliente:
+                raise ValueError("Cliente no registrado")
+            
+            mascota = next((m for m in self.cliente.mascotas if m.nombre == nombreMascota), None)
+            if not mascota:
+                raise ValueError("Mascota no registrada")
+            
+            fecha = input("Por favor ingrese la fecha de la cita (AAAA-MM-DD): ").strip()
+            hora = input("Por favor ingrese la hora de la cita (HH:MM): ").strip()
+            servicio = input("Por favor ingrese el servicio deseado (Consulta, Vacunación, Cirugia, etc): ").strip()
+            veterinario = input("Por favor ingrese el nombre del veterinario: ").strip()
+            
+            datetime.strptime(fecha, "%Y-%M-%D")
+            datetime.strptime(hora, "%H:%M")
+            
+            if not servicio or not veterinario:
+                raise ValueError("Todos los campos son obligatorios. Por favor diligenciar nuevamente.")
+            
+            cita = CitaMascota(fecha, hora, servicio, veterinario)
+            mascota.agregarAlHistorial(cita)
+            print("¡Cita agregada exitosamente!")
         
+        except ValueError as e:
+            print(f"Error: {e}")
