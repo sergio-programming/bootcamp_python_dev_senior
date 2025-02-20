@@ -128,7 +128,7 @@ class SistemaVeterinaria:
             servicio = input("Por favor ingrese el servicio deseado (Consulta, Vacunación, Cirugia, etc): ").strip()
             veterinario = input("Por favor ingrese el nombre del veterinario: ").strip()
             
-            datetime.strptime(fecha, "%Y-%M-%D")
+            datetime.strptime(fecha, "%Y-%m-%d")
             datetime.strptime(hora, "%H:%M")
             
             if not servicio or not veterinario:
@@ -140,3 +140,124 @@ class SistemaVeterinaria:
         
         except ValueError as e:
             print(f"Error: {e}")
+            
+    def actualizarCita(self):
+        try:
+            nombreCliente = input("Ingrese el nombre del cliente que es dueño de la mascota: ").strip()
+            nombreMascota = input("Ingrese el nombre de la mascota: ").strip()
+            
+            cliente = next((c for c in self.clientes if c.nombre == nombreCliente), None)
+            if not cliente:
+                raise ValueError("Cliente no registrado")
+            
+            mascota = next((m for m in self.cliente.mascotas if m.nombre == nombreMascota), None)
+            if not mascota:
+                raise ValueError("Mascota no registrada")
+            
+            if not mascota.historialCitas:
+                raise ValueError("La mascota no tiene citas registradas")
+            
+            print("\nCitas registradas de la mascota:")
+            for i, cita in enumerate(mascota.historialCitas, start=1):
+                print(f"Cita #{i}:")
+                print(f"Fecha: {cita.fecha}")
+                print(f"Fecha: {cita.hora}")
+                print(f"Fecha: {cita.servicio}")
+                print(f"Fecha: {cita.veterinario}")
+            
+            indice = int(input("Seleccione la cita a actualizar: ").strip())
+            
+            if indice < 1 or indice > len(mascota.historialCitas):
+                raise ValueError("La opcion ingresada esta por fuera del rango.")
+            
+            cita = mascota.historialCitas[indice-1]
+            
+            fecha = input("Por favor ingrese la fecha de la cita (AAAA-MM-DD): ").strip()
+            if fecha == "":
+                fecha = cita.fecha
+            else:
+                datetime.strptime(fecha, "%Y-%m-%d")
+            hora = input("Por favor ingrese la hora de la cita (HH:MM): ").strip()
+            if hora == "":
+                hora = cita.hora
+            else:
+                datetime.strptime(hora, "%H:%M")
+            servicio = input("Por favor ingrese el servicio deseado (Consulta, Vacunación, Cirugia, etc): ").strip()
+            if servicio == "":
+                servicio = cita.servicio
+            veterinario = input("Por favor ingrese el nombre del veterinario: ").strip()
+            if veterinario == "":
+                veterinario = cita.veterinario
+                
+            mascota.historialCitas.pop(indice-1)
+            cita = CitaMascota(fecha, hora, servicio, veterinario)
+            mascota.historialCitas.insert(indice-1, cita)
+            
+            print("¡Cita actualizada exitosamente")
+            
+        except ValueError as e:
+            print(f"Error: {e}")
+            
+
+    def consultarHistorial(self):
+        try:
+            nombreCliente = input("Ingrese el nombre del cliente que es dueño de la mascota: ").strip()
+            nombreMascota = input("Ingrese el nombre de la mascota: ").strip()
+            
+            cliente = next((c for c in self.clientes if c.nombre == nombreCliente), None)
+            if not cliente:
+                raise ValueError("Cliente no registrado")
+            
+            mascota = next((m for m in self.cliente.mascotas if m.nombre == nombreMascota), None)
+            if not mascota:
+                raise ValueError("Mascota no registrada")
+            
+            historial = mascota.obtenerHistorial()
+            
+            if not historial:
+                raise ValueError("La mascota no tiene historial de citas registradas")
+            
+            for i, cita in enumerate(historial, start=1):
+                print(f"Cita #{i}:")
+                print(f"Fecha: {cita.fecha}")
+                print(f"Fecha: {cita.hora}")
+                print(f"Fecha: {cita.servicio}")
+                print(f"Fecha: {cita.veterinario}")
+            
+            
+        except ValueError as e:
+            print(f"Error: {e}")
+            
+    
+    def iniciar(self):
+        while True:
+            print("\nSistema de Gestión Veterinaria")
+            print("1. Registrar Cliente.")
+            print("2. Registrar Mascota.")
+            print("3. Programar Cita.")
+            print("4. Actualizar Cita.")
+            print("5. Consultar Historial.")
+            print("6. Salir.")
+            
+            opcion = int(input("Por favor ingrese una opción: ").strip())
+            
+            if opcion == 1:
+                self.registrarCliente()
+            elif opcion == 2:
+                self.registrarMascota()
+            elif opcion == 3:
+                self.programarCita()
+            elif opcion == 4:
+                self.actualizarCita()
+            elif opcion == 5:
+                self.consultarHistorial()
+            elif opcion == 6:
+                print("Gracias por utilizar nuestro sistema. Hasta pronto!!")
+                break
+            else:
+                print("La opcion ingresada no es valida. Por favor intente de nuevo.")    
+            
+            
+if __name__ == "__main__":
+    sistema = SistemaVeterinaria()
+    sistema.iniciar()
