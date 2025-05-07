@@ -47,7 +47,11 @@ class MenuEstudiantes:
         
         #Boton para Registrar estudiante
         self.btn_crear_estudiante = ctk.CTkButton(self.root, text="Registrar Estudiante", command=self.registrar_estudiante)
-        self.btn_crear_estudiante.pack(pady=10)    
+        self.btn_crear_estudiante.pack(pady=10)
+        
+        #Boton para Actualizar estudiante
+        self.btn_actualizar_estudiante = ctk.CTkButton(self.root, text="Actualizar Estudiante", command=self.actualizar_estudiante)    
+        self.btn_actualizar_estudiante.pack(pady=10)
         
         #Crear boton para regresar al menu principal
         self.boton_regresar = ctk.CTkButton(self.root, text="Regresar", command=self.regresar_menu_principal)
@@ -74,6 +78,13 @@ class MenuEstudiantes:
         consultar_estudiantes.root.mainloop() 
     
     def registrar_estudiante(self):
+        self.root.destroy()
         from views.viewsTkinter.view_estudiantes.registrar_estudiante import RegistrarEstudiante
         crear_estudiante = RegistrarEstudiante(self.tema_actual)
         crear_estudiante.root.mainloop()
+        
+    def actualizar_estudiante(self):
+        self.root.destroy()
+        from views.viewsTkinter.view_estudiantes.actualizar_estudiante import ActualizarEstudiante
+        actualizar_estudiante = ActualizarEstudiante(self.tema_actual)
+        actualizar_estudiante.root.mainloop()

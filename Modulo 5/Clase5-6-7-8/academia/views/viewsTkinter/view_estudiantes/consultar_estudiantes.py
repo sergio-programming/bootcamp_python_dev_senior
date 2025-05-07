@@ -17,7 +17,7 @@ class ConsultarEstudiantes:
         
         #Asignar tamaño de la ventana
         ancho_ventana = int(ancho_pantalla * 0.4)
-        alto_ventana = int(alto_pantalla * 0.4)
+        alto_ventana = int(alto_pantalla * 0.6)
         self.root.geometry(f"{ancho_ventana}x{alto_ventana}")
         
         #Configuración de restricciones de la ventana
