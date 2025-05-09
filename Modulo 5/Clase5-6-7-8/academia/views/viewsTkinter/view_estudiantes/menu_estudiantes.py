@@ -19,7 +19,7 @@ class MenuEstudiantes:
         
         #Asignar tamaño de la ventana
         ancho_ventana = int(ancho_pantalla * 0.3)
-        alto_ventana = int(alto_pantalla * 0.4)
+        alto_ventana = int(alto_pantalla * 0.51)
         self.root.geometry(f"{ancho_ventana}x{alto_ventana}")
         
         # Coordenadas centradas
@@ -41,9 +41,13 @@ class MenuEstudiantes:
         self.btn_cambiar_tema = ctk.CTkButton(self.root, text="Cambiar Tema", command=self.cambiar_tema)
         self.btn_cambiar_tema.pack(pady=10)
         
-        #Boton para mostrar estudiantes en una ventana emergente
+        #Boton para mostrar estudiantes
         self.btn_consultar_estudiantes = ctk.CTkButton(self.root, text="Consultar Estudiantes", command=self.consultar_estudiantes)
         self.btn_consultar_estudiantes.pack(pady=10)
+        
+        #Boton para mostrar un estudiante
+        self.btn_consultar_estudiante = ctk.CTkButton(self.root, text="Consultar Estudiante", command=self.consultar_estudiante)
+        self.btn_consultar_estudiante.pack(pady=10)
         
         #Boton para Registrar estudiante
         self.btn_crear_estudiante = ctk.CTkButton(self.root, text="Registrar Estudiante", command=self.registrar_estudiante)
@@ -52,6 +56,10 @@ class MenuEstudiantes:
         #Boton para Actualizar estudiante
         self.btn_actualizar_estudiante = ctk.CTkButton(self.root, text="Actualizar Estudiante", command=self.actualizar_estudiante)    
         self.btn_actualizar_estudiante.pack(pady=10)
+        
+        #Boton para Eliminar estudiante
+        self.btn_eliminar_estudiante = ctk.CTkButton(self.root, text="Eliminar Estudiante", command=self.eliminar_estudiante)
+        self.btn_eliminar_estudiante.pack(pady=10)
         
         #Crear boton para regresar al menu principal
         self.boton_regresar = ctk.CTkButton(self.root, text="Regresar", command=self.regresar_menu_principal)
@@ -75,7 +83,13 @@ class MenuEstudiantes:
     def consultar_estudiantes(self):
         from views.viewsTkinter.view_estudiantes.consultar_estudiantes import ConsultarEstudiantes
         consultar_estudiantes = ConsultarEstudiantes(self.tema_actual)
-        consultar_estudiantes.root.mainloop() 
+        consultar_estudiantes.root.mainloop()
+        
+    def consultar_estudiante(self):
+        self.root.destroy()
+        from views.viewsTkinter.view_estudiantes.consultar_estudiante import ConsultarEstudiante
+        consultar_estudiante = ConsultarEstudiante(self.tema_actual)
+        consultar_estudiante.root.mainloop() 
     
     def registrar_estudiante(self):
         self.root.destroy()
@@ -88,3 +102,9 @@ class MenuEstudiantes:
         from views.viewsTkinter.view_estudiantes.actualizar_estudiante import ActualizarEstudiante
         actualizar_estudiante = ActualizarEstudiante(self.tema_actual)
         actualizar_estudiante.root.mainloop()
+        
+    def eliminar_estudiante(self):
+        self.root.destroy()
+        from views.viewsTkinter.view_estudiantes.eliminar_estudiante import EliminarEstudiante
+        eliminar_estudiante = EliminarEstudiante(self.tema_actual)
+        eliminar_estudiante.root.mainloop()

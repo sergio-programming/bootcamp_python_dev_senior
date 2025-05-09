@@ -33,7 +33,7 @@ class ConsultarEstudiantes:
         self.frame_tabla.pack(pady=10)
         
         #Crear Treeview
-        self.tabla = ttk.Treeview(self.frame_tabla, columns=("ID", "Nombre", "Apellido", "Correo_electronico", "Telefono"), show="headings")
+        self.tabla = ttk.Treeview(self.frame_tabla, columns=("ID", "Nombre", "Apellido", "Correo_electronico", "Telefono"), show="headings", height=12)
         
         #Definir encabezados
         self.tabla.heading("ID", text="ID")

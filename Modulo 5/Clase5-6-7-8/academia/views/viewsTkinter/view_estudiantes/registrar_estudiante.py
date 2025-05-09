@@ -23,6 +23,9 @@ class RegistrarEstudiante:
 
         # Configuración de restricciones de la ventana
         self.root.resizable(False, False)
+        
+        # Configurar cierre de la ventana
+        self.root.protocol("WM_DELETE_WINDOW", self.regresar_menu_estudiantes)
 
         # Título de la ventana
         self.titulo = ctk.CTkLabel(self.root, text="Registrar Estudiante", font=("Arial", 16))
@@ -86,11 +89,11 @@ class RegistrarEstudiante:
         
         try:
             self.estudiante_controller.registrarEstudianteController(nombre, apellido, correo, telefono)
+            self.limpiar_campos()
             self.notificacion(mensaje="Estudiante registrado exitosamente")
-            self.root.destroy()
-            menu_estudiantes = MenuEstudiantes(self.tema_actual)
-            menu_estudiantes.root.mainloop()
+            
         except Exception as e:
+            self.limpiar_campos()
             self.notificacion(mensaje="Error al registrar estudiante")
             print(f"Error inesperado: {e}")
             
@@ -131,3 +134,9 @@ class RegistrarEstudiante:
             return False
 
         return True
+    
+    def limpiar_campos(self):
+        self.entry_nombre.delete(0, ctk.END)
+        self.entry_apellido.delete(0, ctk.END)
+        self.entry_correo.delete(0, ctk.END)
+        self.entry_telefono.delete(0, ctk.END)

@@ -19,11 +19,14 @@ class ActualizarEstudiante:
 
         # Asignar tamaño de la ventana
         ancho_ventana = int(ancho_pantalla * 0.3)
-        alto_ventana = int(alto_pantalla * 0.45)
+        alto_ventana = int(alto_pantalla * 0.5)
         self.root.geometry(f"{ancho_ventana}x{alto_ventana}")
 
         # Configuración de restricciones de la ventana
         self.root.resizable(False, False)
+        
+        # Configurar cierre de la ventana
+        self.root.protocol("WM_DELETE_WINDOW", self.regresar_menu_estudiantes)
 
         # Título de la ventana
         self.titulo = ctk.CTkLabel(self.root, text="Actualizar Estudiante", font=("Arial", 16))
@@ -41,27 +44,27 @@ class ActualizarEstudiante:
 
         # Campo de nombre
         self.label_nombre = ctk.CTkLabel(self.frame_entrada, text="Nombre:")
-        self.label_nombre.grid(row=0, column=0, padx=5, pady=5)
+        self.label_nombre.grid(row=1, column=0, padx=5, pady=5)
         self.entry_nombre = ctk.CTkEntry(self.frame_entrada)
-        self.entry_nombre.grid(row=0, column=1, padx=5, pady=5)
+        self.entry_nombre.grid(row=1, column=1, padx=5, pady=5)
 
         # Campo de apellido
         self.label_apellido = ctk.CTkLabel(self.frame_entrada, text="Apellido:")
-        self.label_apellido.grid(row=1, column=0, padx=5, pady=5)
+        self.label_apellido.grid(row=2, column=0, padx=5, pady=5)
         self.entry_apellido = ctk.CTkEntry(self.frame_entrada)
-        self.entry_apellido.grid(row=1, column=1, padx=5, pady=5)
+        self.entry_apellido.grid(row=2, column=1, padx=5, pady=5)
 
         # Campo de correo
         self.label_correo = ctk.CTkLabel(self.frame_entrada, text="Correo:")
-        self.label_correo.grid(row=2, column=0, padx=5, pady=5)
+        self.label_correo.grid(row=3, column=0, padx=5, pady=5)
         self.entry_correo = ctk.CTkEntry(self.frame_entrada)
-        self.entry_correo.grid(row=2, column=1, padx=5, pady=5)
+        self.entry_correo.grid(row=3, column=1, padx=5, pady=5)
 
         # Campo de teléfono
         self.label_telefono = ctk.CTkLabel(self.frame_entrada, text="Teléfono:")
-        self.label_telefono.grid(row=3, column=0, padx=5, pady=5)
+        self.label_telefono.grid(row=4, column=0, padx=5, pady=5)
         self.entry_telefono = ctk.CTkEntry(self.frame_entrada)
-        self.entry_telefono.grid(row=3, column=1, padx=5, pady=5)
+        self.entry_telefono.grid(row=4, column=1, padx=5, pady=5)
 
         # Frame para los botones
         self.frame_botones = ctk.CTkFrame(self.root)
@@ -94,11 +97,10 @@ class ActualizarEstudiante:
         
         try:
             self.estudiante_controller.actualizarEstudianteController(id,nombre, apellido, correo, telefono)
+            self.limpiar_campos()
             self.notificacion(mensaje="Estudiante actualizado exitosamente")
-            self.root.destroy()
-            menu_estudiantes = MenuEstudiantes(self.tema_actual)
-            menu_estudiantes.mainloop()
         except Exception as e:
+            self.limpiar_campos()
             self.notificacion(mensaje="Error al actualizar estudiante")
             print(f"Error inesperado: {e}")
         
@@ -122,7 +124,7 @@ class ActualizarEstudiante:
         telefono = self.entry_telefono.get().strip()
         
         if not id or not id.isdigit():
-            self.notificacion(mensaje="El id debe contener solo números")
+            self.notificacion(mensaje="El id debe ingresarse y contener solo números")
             return False
         
         if not nombre:
@@ -139,4 +141,10 @@ class ActualizarEstudiante:
             return False
         
         return True
-        
+
+    def limpiar_campos(self):
+        self.entry_id.delete(0, ctk.END)
+        self.entry_nombre.delete(0, ctk.END)
+        self.entry_apellido.delete(0, ctk.END)
+        self.entry_correo.delete(0, ctk.END)
+        self.entry_telefono.delete(0, ctk.END)
