@@ -19,10 +19,10 @@ def actualizar_tarea(db: Session, tarea_id: int, tarea: TareaCreada):
     tarea = db.query(Tarea).filter(Tarea.id == tarea_id).first()
     if not tarea:
         return None
-    for attr, value in tarea.dict().items():
+    for attr, value in tarea.model_dump().items():
         setattr(tarea, attr, value)
     db.commit()
-    db.refresh()
+    db.refresh(tarea)
     return tarea
 
 def eliminar_tarea(db: Session, tarea_id: int):
@@ -31,4 +31,5 @@ def eliminar_tarea(db: Session, tarea_id: int):
         return None
     db.delete(tarea)
     db.commit()
-    return
+    return tarea
+
