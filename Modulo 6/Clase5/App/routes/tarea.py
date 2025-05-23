@@ -42,7 +42,6 @@ def eliminar(tarea_id: int, db: Session = Depends(get_db)):
     return JSONResponse(
         content={
             "mensaje": "Tarea eliminada exitosamente",
-            "tarea eliminada": tarea.model_dump()
         },
         status_code=status.HTTP_200_OK
     )
