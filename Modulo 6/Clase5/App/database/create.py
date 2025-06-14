@@ -8,8 +8,8 @@ load_dotenv()
 
 def crear_base_de_datos(nombre, usuario, password, host="localhost"):
     try:
-        conexion = psycopg2.connect(
-            dbname="postgres",
+        con = psycopg2.connect(
+            dbname="tareas_db",
             user=usuario,
             password=password,
             host=host,
@@ -17,20 +17,23 @@ def crear_base_de_datos(nombre, usuario, password, host="localhost"):
             client_encoding="utf8"
         )
         
-        conexion.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         
-        cursor = conexion.cursor()
+        cur = con.cursor()
         
-        cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (nombre,))
+        cur.execute("SELECT 1 FROM pg_database WHERE datname = %s", (nombre,))
         
-        if not cursor.fetchone():
-            cursor.execute(sql.SQL("CREATE DATABASE {} ENCODING 'UTF8'").format(sql.Identifier(nombre)))
-            print(f"Base de datos {nombre} creada exitosamente.")
+        if not cur.fetchone():
+            cur.execute(sql.SQL("CREATE DATABASE {} ENCODING 'UTF8'").format(sql.Identifier(nombre)))
+            print(f"Base de datos '{nombre}' creada exitosamente.")
         else:
-            print(f"Base de datos {nombre} ya existe")
-            
+            print(f"Base de datos '{nombre}' ya existe.")
+        
+        
     except Exception as e:
-        print(f"Error al crear la base de datos: {e}")
+        print("Error al crear la base de datos:", e)
     finally:
-        if cursor in locals(): cursor.close()
-        if conexion in locals(): conexion.close()
+        if 'cur' in locals(): 
+            cur.close()
+        if 'con' in locals(): 
+            con.close()
