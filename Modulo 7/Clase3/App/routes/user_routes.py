@@ -12,3 +12,24 @@ class LoginData(BaseModel):
     username: str
     password: str
 
+@router.post('/login')
+async def login(data: LoginData, db: Session = Depends(get_db())):
+    user = db.query(User).filter(User.username == data.username).first()
+    if not user or not verificar_password(data.password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Credenciales invalidas")
+    token = crear_token({"sub": user.username})
+    return {"access_token": token, "token_type": "bearer"}
+
+@router.post('/register')
+async def register(data: LoginData, db: Session = Depends(get_db())):
+    user = db.query(User).filter(User.username == data.username).first()
+    if user:
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
+    hashed = hashear_password(data.password)
+    nuevo_usuario = User(username=data.username, hashed_password=hashed)
+    db.add(nuevo_usuario)
+    db.commit()
+    db.refresh(nuevo_usuario)
+    return {"mensaje": "Usuario registrado exitosamente"}
+
+
