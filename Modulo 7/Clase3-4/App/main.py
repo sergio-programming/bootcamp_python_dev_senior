@@ -41,4 +41,3 @@ except Exception as e:
 
 #Rutas
 app.include_router(user_router, prefix='/api/v1')
-
