@@ -5,10 +5,10 @@ from routers import users, products, login, protected
 app = FastAPI()
 
 # Routes
-app.include_router(users.router, prefix='/api/users')
-app.include_router(products.router, prefix='/api/products')
-app.include_router(login.router, prefix='/api/login')
-app.include_router(protected.router, prefix='/api/profile')
+app.include_router(users.router, prefix='/api')
+app.include_router(products.router, prefix='/api')
+app.include_router(login.router, prefix='/api')
+app.include_router(protected.router, prefix='/api')
 
 @app.get('/')
 async def root():
