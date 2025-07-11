@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import auth_routes, task_routes
+from routers import auth_routes
 from core.logger import init_logger
 from database.session import Base, engine
 from models import user_task
