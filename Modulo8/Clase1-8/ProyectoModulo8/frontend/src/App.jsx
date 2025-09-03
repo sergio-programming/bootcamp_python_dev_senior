@@ -1,9 +1,19 @@
+import { useState } from 'react'
 import './App.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import TaskList from './components/TaskList'
+import AuthPanel from './components/AuthPanel'
 
-function App() { 
+function App() {
+
+  const [currentView, setCurrentView] = useState('auth')
+
+  if (currentView === 'auth') {
+    return (
+      <AuthPanel></AuthPanel>
+    )
+  }
 
   return (
     <>

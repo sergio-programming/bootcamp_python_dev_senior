@@ -1,0 +1,8 @@
+[
+  { "id": 1, "text": "Preparar presentación para la reunión", "completed": false, "priority": "high" },
+  { "id": 2, "text": "Enviar reporte semanal", "completed": true, "priority": "low" },
+  { "id": 3, "text": "Actualizar dependencias del proyecto", "completed": false, "priority": "medium" },
+  { "id": 4, "text": "Revisar codigo hecho en clase", "completed": true, "priority": "medium" },
+  { "id": 5, "text": "Planificar sprint próximo", "completed": false, "priority": "high" },
+  { "id": 6, "text": "Responder correos pendientes", "completed": false, "priority": "low" }
+]
