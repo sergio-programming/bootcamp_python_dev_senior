@@ -258,3 +258,6 @@ async def root():
         },
         status_code=status.HTTP_200_OK
     )
+
+app.include_router(usuarios_router, prefix="/api")
+app.include_router(recursos_router, prefix="/api")
