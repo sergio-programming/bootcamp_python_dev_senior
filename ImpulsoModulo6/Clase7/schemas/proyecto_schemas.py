@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, Optional
 
 class ProyectoBase(BaseModel):
-    proyecto: str = Field(..., min_length=3, max_length=50)
+    nombre: str = Field(..., min_length=3, max_length=50)
     descripcion: str = Field(..., min_length=10, max_length=150)
     presupuesto: float = Field(..., gt=0, le=1000000000)
     fecha_inicio: str = Field(..., description="YYYY-MM-DD", examples="2025-09-25")
@@ -11,7 +11,7 @@ class ProyectoCreate(ProyectoBase):
     pass
 
 class ProyectoUpdate(BaseModel):
-    proyecto: Optional[str] = Field(None, min_length=3, max_length=50)
+    nombre: Optional[str] = Field(None, min_length=3, max_length=50)
     descripcion: Optional[str] = Field(None, min_length=10, max_length=150)
     presupuesto: Optional[float] = Field(None, gt=0, le=1000000000)
     fecha_inicio: Optional[str] = Field(None, description="YYYY-MM-DD", examples="2025-09-25")

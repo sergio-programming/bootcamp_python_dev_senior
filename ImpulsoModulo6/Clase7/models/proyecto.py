@@ -10,3 +10,4 @@ class Project(Base):
     descripcion = Column(Text, nullable=False)
     presupuesto = Column(Float, nullable=False)
     fecha_inicio = Column(Date, nullable=False)
+    estado = Column(String, nullable=False)
