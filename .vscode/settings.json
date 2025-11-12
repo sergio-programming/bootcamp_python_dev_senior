@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./Modulo 3/Clase5/proyecto/src"
-    ]
+    ],
+    "CodeGPT.apiKey": "OpenAI"
 }
